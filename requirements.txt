@@ -1,0 +1,6 @@
+crewai
+langchain-groq
+streamlit
+psycopg2-binary
+python-dotenv
+sqlalchemy
