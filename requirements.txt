@@ -1,6 +1,7 @@
-crewai
-langchain-groq
 streamlit
+crewai
+crewai-tools
+groq
+litellm
 psycopg2-binary
 python-dotenv
-sqlalchemy
