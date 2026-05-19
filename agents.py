@@ -1,17 +1,15 @@
 import os
 import streamlit as st
-from crewai import Agent, Task, Crew, Process, LLM
+from crewai import Agent, Task, Crew, Process
+from langchain_groq import ChatGroq
 from db_utils import fetch_current_schema
 
-# 1. FORCE the API key out of the Streamlit vault
+# 1. Securely load the API key
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
-# 2. THE MAGIC FIX: Tell the router to drop unsupported features like 'cache_breakpoint'
-os.environ["LITELLM_DROP_PARAMS"] = "True"
-
-# 3. Initialize using the fastest model
-my_llm = LLM(
-    model="groq/llama3-8b-8192",
+# 2. BYPASS LITELLM: Use the official LangChain direct connection
+my_llm = ChatGroq(
+    model="llama3-8b-8192",
     temperature=0.1
 )
 
