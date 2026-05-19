@@ -1,16 +1,16 @@
 import os
+import streamlit as st
 from crewai import Agent, Task, Crew, Process, LLM
 from db_utils import fetch_current_schema
 
-# Note: We can remove load_dotenv() because Streamlit Cloud handles the environment variables automatically!
+# 1. FORCE the API key out of the Streamlit vault and into the system environment
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
-# Initialize the LLM using Groq's highly stable model
+# 2. Initialize using the fastest, most stable model for your live presentation
 my_llm = LLM(
-    model="groq/llama3-70b-8192",
-    temperature=0.1,
-    api_key=os.environ.get("GROQ_API_KEY") # Explicitly grabbing it ensures no cloud drops
+    model="groq/llama3-8b-8192",
+    temperature=0.1
 )
-
 def run_schema_evolution(user_request: str) -> str:
     """Orchestrates the agents to process the schema evolution request."""
     
