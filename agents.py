@@ -1,14 +1,14 @@
 import os
 from crewai import Agent, Task, Crew, Process, LLM
 from db_utils import fetch_current_schema
-from dotenv import load_dotenv
 
-load_dotenv()
+# Note: We can remove load_dotenv() because Streamlit Cloud handles the environment variables automatically!
 
-# Initialize the LLM using Groq's newest model
+# Initialize the LLM using Groq's highly stable model
 my_llm = LLM(
-    model="groq/llama-3.3-70b-versatile",
-    temperature=0.1
+    model="groq/llama3-70b-8192",
+    temperature=0.1,
+    api_key=os.environ.get("GROQ_API_KEY") # Explicitly grabbing it ensures no cloud drops
 )
 
 def run_schema_evolution(user_request: str) -> str:
