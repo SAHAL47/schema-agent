@@ -3,14 +3,18 @@ import streamlit as st
 from crewai import Agent, Task, Crew, Process, LLM
 from db_utils import fetch_current_schema
 
-# 1. FORCE the API key out of the Streamlit vault and into the system environment
+# 1. FORCE the API key out of the Streamlit vault
 os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
-# 2. Initialize using the fastest, most stable model for your live presentation
+# 2. THE MAGIC FIX: Tell the router to drop unsupported features like 'cache_breakpoint'
+os.environ["LITELLM_DROP_PARAMS"] = "True"
+
+# 3. Initialize using the fastest model
 my_llm = LLM(
     model="groq/llama3-8b-8192",
     temperature=0.1
 )
+
 def run_schema_evolution(user_request: str) -> str:
     """Orchestrates the agents to process the schema evolution request."""
     
