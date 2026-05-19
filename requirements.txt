@@ -5,3 +5,4 @@ groq
 litellm
 psycopg2-binary
 python-dotenv
+langchain-groq
